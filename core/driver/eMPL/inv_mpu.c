@@ -51,7 +51,27 @@
 #define log_i       MPL_LOGI
 #define log_e       MPL_LOGE
 #define min(a,b) ((a<b)?a:b)
-   
+
+#ifdef CC2650
+// MPU pins for the CC2650
+// Pins that are used by the MPU9250
+static PIN_Config MpuPinTable[] =
+{
+		Board_MPU_INT    | PIN_INPUT_EN | PIN_PULLDOWN | PIN_IRQ_DIS | PIN_HYSTERESIS,
+		Board_MPU_POWER  | PIN_GPIO_OUTPUT_EN | PIN_GPIO_HIGH | PIN_PUSHPULL | PIN_DRVSTR_MAX,
+
+		PIN_TERMINATE
+};
+//#define intPOS			//Interrupt pos or neg
+
+static PIN_State pinGpioState;
+static PIN_Handle hMpuPin;
+
+typedef void (*MpuRdyCallbackFn_t)(void);
+static MpuRdyCallbackFn_t MpuRdyCallbackFn = NULL;
+
+#endif
+
 #elif defined MOTION_DRIVER_TARGET_MSP430
 #include "msp430.h"
 #include "msp430_i2c.h"
@@ -717,6 +737,18 @@ int mpu_init(struct int_param_s *int_param)
 {
     unsigned char data[6];
 
+#ifdef CC2650
+	// Pins used by MPU
+	hMpuPin = PIN_open(&pinGpioState, MpuPinTable);
+
+	// Turn on MPU power supply
+	PIN_setOutputValue(hMpuPin,Board_MPU_POWER, Board_MPU_POWER_ON);
+
+	//log_i("\tSel Interfaz i2c=1\n");
+	if(!i2c_sel_interface(1,st.hw->addr))						//Select MPU i2c interface
+		return -1;
+#endif
+
     /* Reset device. */
     data[0] = BIT_RESET;
     if (i2c_write(st.hw->addr, st.reg->pwr_mgmt_1, 1, data))
@@ -773,7 +805,12 @@ int mpu_init(struct int_param_s *int_param)
     if (mpu_configure_fifo(0))
         return -1;
 
-#ifndef EMPL_TARGET_STM32F4    
+#ifndef EMPL_TARGET_STM32F4
+    if (int_param)
+        reg_int_cb(int_param);
+#endif
+
+#ifdef CC2650
     if (int_param)
         reg_int_cb(int_param);
 #endif
@@ -3286,6 +3323,39 @@ lp_int_restore:
     return 0;
 }
 
+#ifdef CC2650
+/*********************************************************************
+ * @fn      Interrupt set for CC2650
+ * @brief	Cfg the interrupt, receives a pointer to a dynamic function, just to make compatible with invsense lib
+ * 			but it doesn't need it, It'll be always the same callback fcn
+ * @params
+ */
+
+bool reg_int_cb(struct int_param_s *int_param){
+	// Register MPU interrupt
+	PIN_registerIntCb(hMpuPin, &MPUcallbackFxn);
+
+	#ifdef intPOS
+		PIN_setInterrupt(hMpuPin, PIN_ID(Board_MPU_INT)|PIN_IRQ_POSEDGE);
+	#else
+		PIN_setInterrupt(hMpuPin, PIN_ID(Board_MPU_INT)|PIN_IRQ_NEGEDGE);		//Interrupt in the negative edge Because MPU is active in low
+	#endif
+	MpuRdyCallbackFn = int_param->cb;
+	return false;
+}
+
+/*********************************************************************
+ * @fn      Interrupt callback
+ * @brief
+ */
+void MPUcallbackFxn(PIN_Handle handle, PIN_Id pinId) {
+	if(pinId==Board_MPU_INT){
+		if (MpuRdyCallbackFn != NULL)
+				MpuRdyCallbackFn();
+	}
+}
+
+#endif
 /**
  *  @}
  */

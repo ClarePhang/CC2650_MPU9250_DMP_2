@@ -1,8 +1,8 @@
 eclipse.preferences.version=1
 encoding//Debug/core/driver/eMPL/subdir_rules.mk=UTF-8
 encoding//Debug/core/driver/eMPL/subdir_vars.mk=UTF-8
-encoding//Debug/core/driver/stm32L/subdir_rules.mk=UTF-8
-encoding//Debug/core/driver/stm32L/subdir_vars.mk=UTF-8
+encoding//Debug/core/driver/outputs/subdir_rules.mk=UTF-8
+encoding//Debug/core/driver/outputs/subdir_vars.mk=UTF-8
 encoding//Debug/core/eMPL-hal/subdir_rules.mk=UTF-8
 encoding//Debug/core/eMPL-hal/subdir_vars.mk=UTF-8
 encoding//Debug/core/mllite/subdir_rules.mk=UTF-8

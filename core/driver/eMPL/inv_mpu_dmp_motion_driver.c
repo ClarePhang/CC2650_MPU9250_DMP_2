@@ -46,6 +46,11 @@
 #define log_i       MPL_LOGI
 #define log_e       MPL_LOGE
 
+#elif defined CC2650
+#include "i2c_rutinas.h"
+#include "empty.h"
+#define log_i       MPL_LOGI
+#define log_e       MPL_LOGE
 
 #elif defined MOTION_DRIVER_TARGET_MSP430
 #include "msp430.h"

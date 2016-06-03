@@ -43,6 +43,20 @@ struct int_param_s {
 #endif
 };
 
+
+#ifdef CC2650
+/* XDCtools Header files*/
+#include <xdc/std.h>													//For printing
+#include <xdc/runtime/System.h>
+#include "stdbool.h"
+#include <stdio.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <ti/drivers/PIN.h>
+#endif
+
 #define MPU_INT_STATUS_DATA_READY       (0x0001)
 #define MPU_INT_STATUS_DMP              (0x0002)
 #define MPU_INT_STATUS_PLL_READY        (0x0004)
@@ -129,6 +143,9 @@ int mpu_read_reg(unsigned char reg, unsigned char *data);
 int mpu_run_self_test(long *gyro, long *accel);
 int mpu_run_6500_self_test(long *gyro, long *accel, unsigned char debug);
 int mpu_register_tap_cb(void (*func)(unsigned char, unsigned char));
+
+void MPUcallbackFxn(PIN_Handle handle, PIN_Id pinId);
+bool reg_int_cb(struct int_param_s *int_param);
 
 #endif  /* #ifndef _INV_MPU_H_ */
 

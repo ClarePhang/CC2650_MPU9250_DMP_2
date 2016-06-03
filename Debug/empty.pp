@@ -1,6 +1,7 @@
 # FIXED
 
 empty.obj: ../empty.c
+empty.obj: ../empty.h
 empty.obj: C:/ti/xdctools_3_32_00_06_core/packages/xdc/std.h
 empty.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stdarg.h
 empty.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stddef.h
@@ -163,6 +164,8 @@ empty.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stdarg.h
 empty.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/linkage.h
 empty.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/_lock.h
 empty.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stddef.h
+empty.obj: C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/tidrivers_cc13xx_cc26xx_2_16_01_13/packages/ti/drivers/UART.h
+empty.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stddef.h
 empty.obj: ../Board.h
 empty.obj: C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/tidrivers_cc13xx_cc26xx_2_16_01_13/packages/ti/drivers/Power.h
 empty.obj: C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/tidrivers_cc13xx_cc26xx_2_16_01_13/packages/ti/drivers/utils/List.h
@@ -186,6 +189,13 @@ empty.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stdio.h
 empty.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stdarg.h
 empty.obj: ../empty.h
 empty.obj: ../core/driver/eMPL/inv_mpu.h
+empty.obj: C:/ti/xdctools_3_32_00_06_core/packages/xdc/runtime/System.h
+empty.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stdio.h
+empty.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stdlib.h
+empty.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/string.h
+empty.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/math.h
+empty.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/ymath.h
+empty.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/float.h
 empty.obj: ../core/driver/eMPL/inv_mpu_dmp_motion_driver.h
 empty.obj: ../core/mllite/invensense.h
 empty.obj: ../core/mllite/data_builder.h
@@ -198,8 +208,6 @@ empty.obj: ../core/mllite/hal_outputs.h
 empty.obj: ../core/mllite/message_layer.h
 empty.obj: C:/Users/Ein/Documents/GitHub/CC2650_MPU9250_DMP_2/core/driver/include/mlmath.h
 empty.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/math.h
-empty.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/ymath.h
-empty.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/float.h
 empty.obj: ../core/mllite/ml_math_func.h
 empty.obj: ../core/mllite/mpl.h
 empty.obj: ../core/mllite/results_holder.h
@@ -224,13 +232,11 @@ empty.obj: ../core/mpl/no_gyro_fusion.h
 empty.obj: ../core/mpl/quaternion_supervisor.h
 empty.obj: ../core/eMPL-hal/eMPL_outputs.h
 empty.obj: ../core/driver/include/mpu.h
-empty.obj: ../core/driver/stm32L/packet.h
+empty.obj: C:/Users/Ein/Documents/GitHub/CC2650_MPU9250_DMP_2/core/driver/outputs/packet.h
 empty.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stdio.h
 empty.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stdlib.h
 empty.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/string.h
 empty.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stdarg.h
-empty.obj: C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/tidrivers_cc13xx_cc26xx_2_16_01_13/packages/ti/drivers/uart.h
-empty.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stddef.h
 empty.obj: ../delays.h
 empty.obj: C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/bios_6_45_02_31/packages/ti/sysbios/knl/Task.h
 empty.obj: C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/bios_6_45_02_31/packages/ti/sysbios/knl/Clock.h
@@ -249,8 +255,12 @@ empty.obj: C:/ti/xdctools_3_32_00_06_core/packages/xdc/runtime/Types.h
 empty.obj: C:/ti/xdctools_3_32_00_06_core/packages/xdc/runtime/ITimestampProvider.h
 empty.obj: C:/ti/xdctools_3_32_00_06_core/packages/xdc/runtime/package/Timestamp_SupportProxy.h
 empty.obj: C:/ti/xdctools_3_32_00_06_core/packages/xdc/runtime/Types.h
+empty.obj: ../i2c_rutinas.h
+empty.obj: C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/tidrivers_cc13xx_cc26xx_2_16_01_13/packages/ti/drivers/I2C.h
+empty.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stddef.h
 
 ../empty.c: 
+../empty.h: 
 C:/ti/xdctools_3_32_00_06_core/packages/xdc/std.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stdarg.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stddef.h: 
@@ -413,6 +423,8 @@ C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stdarg.h:
 C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/linkage.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/_lock.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stddef.h: 
+C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/tidrivers_cc13xx_cc26xx_2_16_01_13/packages/ti/drivers/UART.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stddef.h: 
 ../Board.h: 
 C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/tidrivers_cc13xx_cc26xx_2_16_01_13/packages/ti/drivers/Power.h: 
 C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/tidrivers_cc13xx_cc26xx_2_16_01_13/packages/ti/drivers/utils/List.h: 
@@ -436,6 +448,13 @@ C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stdio.h:
 C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stdarg.h: 
 ../empty.h: 
 ../core/driver/eMPL/inv_mpu.h: 
+C:/ti/xdctools_3_32_00_06_core/packages/xdc/runtime/System.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stdio.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stdlib.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/string.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/math.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/ymath.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/float.h: 
 ../core/driver/eMPL/inv_mpu_dmp_motion_driver.h: 
 ../core/mllite/invensense.h: 
 ../core/mllite/data_builder.h: 
@@ -448,8 +467,6 @@ C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/limits.h:
 ../core/mllite/message_layer.h: 
 C:/Users/Ein/Documents/GitHub/CC2650_MPU9250_DMP_2/core/driver/include/mlmath.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/math.h: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/ymath.h: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/float.h: 
 ../core/mllite/ml_math_func.h: 
 ../core/mllite/mpl.h: 
 ../core/mllite/results_holder.h: 
@@ -474,13 +491,11 @@ C:/Users/Ein/Documents/GitHub/CC2650_MPU9250_DMP_2/core/driver/include/mlinclude
 ../core/mpl/quaternion_supervisor.h: 
 ../core/eMPL-hal/eMPL_outputs.h: 
 ../core/driver/include/mpu.h: 
-../core/driver/stm32L/packet.h: 
+C:/Users/Ein/Documents/GitHub/CC2650_MPU9250_DMP_2/core/driver/outputs/packet.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stdio.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stdlib.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/string.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stdarg.h: 
-C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/tidrivers_cc13xx_cc26xx_2_16_01_13/packages/ti/drivers/uart.h: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stddef.h: 
 ../delays.h: 
 C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/bios_6_45_02_31/packages/ti/sysbios/knl/Task.h: 
 C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/bios_6_45_02_31/packages/ti/sysbios/knl/Clock.h: 
@@ -499,3 +514,6 @@ C:/ti/xdctools_3_32_00_06_core/packages/xdc/runtime/Types.h:
 C:/ti/xdctools_3_32_00_06_core/packages/xdc/runtime/ITimestampProvider.h: 
 C:/ti/xdctools_3_32_00_06_core/packages/xdc/runtime/package/Timestamp_SupportProxy.h: 
 C:/ti/xdctools_3_32_00_06_core/packages/xdc/runtime/Types.h: 
+../i2c_rutinas.h: 
+C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/tidrivers_cc13xx_cc26xx_2_16_01_13/packages/ti/drivers/I2C.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stddef.h: 

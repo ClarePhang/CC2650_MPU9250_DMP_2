@@ -26,7 +26,7 @@ ORDERED_OBJS += \
 "./core/mllite/start_manager.obj" \
 "./core/mllite/storage_manager.obj" \
 "./core/eMPL-hal/eMPL_outputs.obj" \
-"./core/driver/stm32L/log_stm32.obj" \
+"./core/driver/outputs/packet.obj" \
 "./core/driver/eMPL/inv_mpu.obj" \
 "./core/driver/eMPL/inv_mpu_dmp_motion_driver.obj" \
 "../CC2650STK.cmd" \
@@ -46,13 +46,13 @@ RMDIR := RMDIR /S/Q
 -include core/mpl/subdir_vars.mk
 -include core/mllite/subdir_vars.mk
 -include core/eMPL-hal/subdir_vars.mk
--include core/driver/stm32L/subdir_vars.mk
+-include core/driver/outputs/subdir_vars.mk
 -include core/driver/eMPL/subdir_vars.mk
 -include subdir_rules.mk
 -include core/mpl/subdir_rules.mk
 -include core/mllite/subdir_rules.mk
 -include core/eMPL-hal/subdir_rules.mk
--include core/driver/stm32L/subdir_rules.mk
+-include core/driver/outputs/subdir_rules.mk
 -include core/driver/eMPL/subdir_rules.mk
 -include objects.mk
 
@@ -166,7 +166,7 @@ all: CC2650_MPU9250_DMP_2.out
 CC2650_MPU9250_DMP_2.out: $(OBJS) $(CMD_SRCS) $(A_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Linker'
-	"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/bin/armcl" -mv7M3 --code_state=16 --float_support=vfplib --abi=eabi -me -g --define=ccs --define=USE_DMP --define=EMPL --define=EMPL_TARGET_STM32F4 --define=MPU9250 --diag_wrap=off --display_error_number --diag_warning=225 --diag_warning=255 --gen_func_subsections=on -z -m"CC2650_MPU9250_DMP_2.map" --heap_size=0 --stack_size=256 -i"C:/Users/Ein/Documents/GitHub/CC2650_MPU9250_DMP_2/core/driver/eMPL" -i"C:/Users/Ein/Documents/GitHub/CC2650_MPU9250_DMP_2/core/mpl" -i"C:/Users/Ein/Documents/GitHub/CC2650_MPU9250_DMP_2/core/eMPL-hal" -i"C:/Users/Ein/Documents/GitHub/CC2650_MPU9250_DMP_2/core/mllite" -i"C:/Users/Ein/Documents/GitHub/CC2650_MPU9250_DMP_2/core/driver/include" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include" --reread_libs --display_error_number --diag_wrap=off --warn_sections --xml_link_info="CC2650_MPU9250_DMP_2_linkInfo.xml" --rom_model -o "CC2650_MPU9250_DMP_2.out" $(ORDERED_OBJS) $(A_SRCS)
+	"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/bin/armcl" -mv7M3 --code_state=16 --float_support=vfplib --abi=eabi -me -g --define=ccs --define=CC2650 --define=USE_DMP --define=EMPL --define=EMPL_TARGET_STM32F4 --define=MPU9250 --diag_wrap=off --display_error_number --diag_warning=225 --diag_warning=255 --gen_func_subsections=on -z -m"CC2650_MPU9250_DMP_2.map" --heap_size=0 --stack_size=256 -i"C:/Users/Ein/Documents/GitHub/CC2650_MPU9250_DMP_2/core/driver/eMPL" -i"C:/Users/Ein/Documents/GitHub/CC2650_MPU9250_DMP_2/core/mpl" -i"C:/Users/Ein/Documents/GitHub/CC2650_MPU9250_DMP_2/core/eMPL-hal" -i"C:/Users/Ein/Documents/GitHub/CC2650_MPU9250_DMP_2/core/mllite" -i"C:/Users/Ein/Documents/GitHub/CC2650_MPU9250_DMP_2/core/driver/include" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include" --reread_libs --display_error_number --diag_wrap=off --warn_sections --xml_link_info="CC2650_MPU9250_DMP_2_linkInfo.xml" --rom_model -o "CC2650_MPU9250_DMP_2.out" $(ORDERED_OBJS) $(A_SRCS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -180,8 +180,8 @@ CC2650_MPU9250_DMP_2.hex: $(EXE_OUTPUTS)
 clean:
 	-$(RM) $(GEN_MISC_FILES__QUOTED)$(EXE_OUTPUTS__QUOTED)$(GEN_FILES__QUOTED)$(BIN_OUTPUTS__QUOTED)$(GEN_OPTS__QUOTED)$(GEN_CMDS__QUOTED)
 	-$(RMDIR) $(GEN_MISC_DIRS__QUOTED)
-	-$(RM) "CC2650STK.pp" "ccfg.pp" "delays.pp" "empty.pp" "i2c_rutinas.pp" "prints.pp" "core\mllite\data_builder.pp" "core\mllite\hal_outputs.pp" "core\mllite\message_layer.pp" "core\mllite\ml_math_func.pp" "core\mllite\mlmath.pp" "core\mllite\mpl.pp" "core\mllite\results_holder.pp" "core\mllite\start_manager.pp" "core\mllite\storage_manager.pp" "core\eMPL-hal\eMPL_outputs.pp" "core\driver\stm32L\log_stm32.pp" "core\driver\eMPL\inv_mpu.pp" "core\driver\eMPL\inv_mpu_dmp_motion_driver.pp" 
-	-$(RM) "CC2650STK.obj" "ccfg.obj" "delays.obj" "empty.obj" "i2c_rutinas.obj" "prints.obj" "core\mllite\data_builder.obj" "core\mllite\hal_outputs.obj" "core\mllite\message_layer.obj" "core\mllite\ml_math_func.obj" "core\mllite\mlmath.obj" "core\mllite\mpl.obj" "core\mllite\results_holder.obj" "core\mllite\start_manager.obj" "core\mllite\storage_manager.obj" "core\eMPL-hal\eMPL_outputs.obj" "core\driver\stm32L\log_stm32.obj" "core\driver\eMPL\inv_mpu.obj" "core\driver\eMPL\inv_mpu_dmp_motion_driver.obj" 
+	-$(RM) "CC2650STK.pp" "ccfg.pp" "delays.pp" "empty.pp" "i2c_rutinas.pp" "prints.pp" "core\mllite\data_builder.pp" "core\mllite\hal_outputs.pp" "core\mllite\message_layer.pp" "core\mllite\ml_math_func.pp" "core\mllite\mlmath.pp" "core\mllite\mpl.pp" "core\mllite\results_holder.pp" "core\mllite\start_manager.pp" "core\mllite\storage_manager.pp" "core\eMPL-hal\eMPL_outputs.pp" "core\driver\outputs\packet.pp" "core\driver\eMPL\inv_mpu.pp" "core\driver\eMPL\inv_mpu_dmp_motion_driver.pp" 
+	-$(RM) "CC2650STK.obj" "ccfg.obj" "delays.obj" "empty.obj" "i2c_rutinas.obj" "prints.obj" "core\mllite\data_builder.obj" "core\mllite\hal_outputs.obj" "core\mllite\message_layer.obj" "core\mllite\ml_math_func.obj" "core\mllite\mlmath.obj" "core\mllite\mpl.obj" "core\mllite\results_holder.obj" "core\mllite\start_manager.obj" "core\mllite\storage_manager.obj" "core\eMPL-hal\eMPL_outputs.obj" "core\driver\outputs\packet.obj" "core\driver\eMPL\inv_mpu.obj" "core\driver\eMPL\inv_mpu_dmp_motion_driver.obj" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

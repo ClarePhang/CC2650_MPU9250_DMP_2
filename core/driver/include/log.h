@@ -175,7 +175,7 @@ extern "C" {
  * Simplified macro to send an info log message using the current MPL_LOG_TAG.
  */
 
-#define CC2650 //Impresión de CC2650
+
 #ifdef CC2650
 #include <xdc/std.h>													//TIRTOS
 #include <xdc/runtime/System.h>

@@ -4,21 +4,21 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../core/driver/stm32L/log_stm32.c 
+../core/driver/outputs/packet.c 
 
 OBJS += \
-./core/driver/stm32L/log_stm32.obj 
+./core/driver/outputs/packet.obj 
 
 C_DEPS += \
-./core/driver/stm32L/log_stm32.pp 
+./core/driver/outputs/packet.pp 
 
 C_DEPS__QUOTED += \
-"core\driver\stm32L\log_stm32.pp" 
+"core\driver\outputs\packet.pp" 
 
 OBJS__QUOTED += \
-"core\driver\stm32L\log_stm32.obj" 
+"core\driver\outputs\packet.obj" 
 
 C_SRCS__QUOTED += \
-"../core/driver/stm32L/log_stm32.c" 
+"../core/driver/outputs/packet.c" 
 
 

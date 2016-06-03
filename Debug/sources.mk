@@ -124,6 +124,6 @@ SUBDIRS := \
 core/mpl \
 core/mllite \
 core/eMPL-hal \
-core/driver/stm32L \
+core/driver/outputs \
 core/driver/eMPL \
 

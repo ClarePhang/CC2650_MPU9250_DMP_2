@@ -100,8 +100,6 @@
 
 /* Content from ti.sysbios.hal (null): */
 
-/* Content from ti.sysbios (null): */
-
 /* Content from ti.sysbios.family.arm.cc26xx (null): */
 
 /* Content from ti.sysbios.family.arm.m3 (ti/sysbios/family/arm/m3/linkcmd.xdt): */
@@ -110,6 +108,8 @@
 ti_sysbios_family_arm_m3_Hwi_nvic = 0xe000e000;
 
 /* Content from ti.sysbios.knl (null): */
+
+/* Content from ti.sysbios (null): */
 
 /* Content from ti.drivers.ports (null): */
 

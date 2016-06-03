@@ -18,18 +18,19 @@
  *      @brief  Logging facility for the TI MSP430.
  */
 
+#include <core/driver/outputs/packet.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
 
-#include "packet.h"
 #include "core/driver/include/log.h"
 //#include "stm32f4xx.h" 	//Eliminado //memoria del smt
 //#include "uart.h"			//Eliminado	//solo define el fputc
 #include <ti/drivers/uart.h>
 
+#ifdef CC2650
 UART_Handle uart;
 UART_Params uartParams;
 char UartIn;
@@ -42,6 +43,28 @@ static UartReceivedCb_t UartReceivedCb = NULL;
 #define PACKET_QUAT     (2)
 #define PACKET_DATA     (3)
 
+//Uart ini
+bool ini_uart(void){
+    /* Create a UART with data processing off. */
+    UART_Params_init(&uartParams);
+    uartParams.readMode=UART_MODE_CALLBACK;
+    uartParams.writeDataMode = UART_DATA_BINARY;
+    uartParams.readDataMode = UART_DATA_BINARY;
+    uartParams.readReturnMode = UART_RETURN_FULL;
+    uartParams.readEcho = UART_ECHO_OFF;
+    uartParams.baudRate = 9600;
+    uartParams.readCallback  = &readCallback;
+    uart = UART_open(Board_UART0, &uartParams);
+
+    if (uart == NULL) {
+        System_abort("Error opening the UART");
+    }
+    char out='c';
+
+    UART_write(uart, &out, 1);
+    return false;
+}
+#endif
 /**
  *  @brief      Prints a variable argument log message.
  *  USB output will be formatted as follows:\n
