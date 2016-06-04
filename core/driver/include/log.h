@@ -221,6 +221,7 @@ extern "C" {
 
 #ifdef CC2650
 #define MPL_LOGE System_abort
+//#define MPL_LOGE System_flush(); System_printf
 #endif
 
 #ifndef MPL_LOGE

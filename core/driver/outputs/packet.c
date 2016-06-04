@@ -52,7 +52,7 @@ bool ini_uart(void){
     uartParams.readDataMode = UART_DATA_BINARY;
     uartParams.readReturnMode = UART_RETURN_FULL;
     uartParams.readEcho = UART_ECHO_OFF;
-    uartParams.baudRate = 9600;
+    uartParams.baudRate = 9600;						//TODO: Why does it only works for 9600?? Because im debuggin? With others bauds it bricks
     uartParams.readCallback  = &readCallback;
     uart = UART_open(Board_UART0, &uartParams);
 
@@ -252,7 +252,7 @@ void readCallback(UART_Handle handle, void *buffer, size_t num)
 {
 	if (UartReceivedCb != NULL)
 		UartReceivedCb();
-	//System_printf("Lalanga");
+//	System_printf("Lalanga");
 	//System_flush();
 }
 

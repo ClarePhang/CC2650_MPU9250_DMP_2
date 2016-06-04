@@ -9,10 +9,7 @@ static PIN_State ledPinState;
 Task_Struct task0Struct;
 Char task0Stack[TASKSTACKSIZE];
 
-/*
- * Application LED pin configuration table:
- *   - All LEDs board LEDs are off.
- */
+
 PIN_Config ledPinTable[] = {
 		Board_LED0 | PIN_GPIO_OUTPUT_EN | PIN_GPIO_LOW | PIN_PUSHPULL | PIN_DRVSTR_MAX,
 		Board_LED1 | PIN_GPIO_OUTPUT_EN | PIN_GPIO_LOW | PIN_PUSHPULL | PIN_DRVSTR_MAX,
@@ -44,11 +41,19 @@ struct platform_data_s {
  * boards at Invensense. If needed, please modify the matrices to match the
  * chip-to-body matrix for your particular set up.
  */
+#ifndef CC2650
 static struct platform_data_s gyro_pdata = {
 		.orientation = { 1, 0, 0,
 				0, 1, 0,
 				0, 0, 1}
 };
+#else
+static struct platform_data_s gyro_pdata = {
+		.orientation = { 1,  0,  0,
+						 0,  1,  0,
+						 0,  0,  1}
+};
+#endif
 
 #if defined MPU9150 || defined MPU9250
 static struct platform_data_s compass_pdata = {
@@ -830,19 +835,24 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 	mpu_set_dmp_state(1);
 	hal.dmp_on = 1;
 
+//	while(1){
+//		PIN_setOutputValue(ledPinHandle, Board_LED1,!PIN_getOutputValue(Board_LED1));
+//		Task_sleep(100);
+//	}
+
+	uartRead();																//Pide caracter via uart, sin bloquear
 	printt("Rutilde\n"); System_flush();
 	while(1){
 //		PIN_setOutputValue(ledPinHandle, Board_LED1,!PIN_getOutputValue(Board_LED1));
 //		Task_sleep(100);
 		unsigned long sensor_timestamp;
 		int new_data = 0;
-		if (new_uart) {
-			/* A byte has been received via USART. See handle_input for a list of
-			 * valid commands.
-			 */
+		if(new_uart){
+			new_uart=FALSE;
 			handle_input();
-			new_uart=0;
+			uartRead();																//Pide caracter via uart, sin bloquear
 		}
+
 //		get_tick_count(&timestamp);
 		get_ms(&timestamp);
 
@@ -1004,7 +1014,7 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 			read_from_mpl();
 		}
 
-
+		flushh();
 	}
 }
 
