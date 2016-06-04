@@ -178,7 +178,7 @@ if (msg) {
 	} else if (msg & INV_MSG_NO_MOTION_EVENT) {
 		MPL_LOGI("No motion!\n");
 	}
-}
+	}
 }
 
 #ifdef COMPASS_ENABLED
