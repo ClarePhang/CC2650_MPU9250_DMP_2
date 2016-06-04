@@ -179,7 +179,8 @@ extern "C" {
 #ifdef CC2650
 #include <xdc/std.h>													//TIRTOS
 #include <xdc/runtime/System.h>
-#define MPL_LOGI System_flush(); System_printf
+//#define MPL_LOGI System_flush(); System_printf
+#define MPL_LOGI (void)
 #endif
 
 #ifndef MPL_LOGI
@@ -220,7 +221,8 @@ extern "C" {
  */
 
 #ifdef CC2650
-#define MPL_LOGE System_abort
+//#define MPL_LOGE System_abort
+#define MPL_LOGE (void)
 //#define MPL_LOGE System_flush(); System_printf
 #endif
 
