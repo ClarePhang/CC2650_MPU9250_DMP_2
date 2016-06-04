@@ -37,6 +37,7 @@ You can find my code here in github. I'll appreciate any contribution or fix tha
 write here or push to my repository.
 
 https://github.com/EinSoldiatGott/CC2650_MPU9250_DMP_2
+https://github.com/EinSoldiatGott/eMPL-python-CC2650
 
 If you test directly with the battery please let me know how it works.
 
