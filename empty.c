@@ -1,15 +1,3 @@
-/*
- * empty.c (main)
- *
- *  	Created on: 1/04/2016
- *      Author: EinSoldiatGott
- * 		José Iván Esquivel Mendoza
- * 		Universidad Autónoma Metropolitana
- * 		Jesquivel@xanum.uam.mx, einsoldiatgott@gmail.com
- *
- *		Ported from invensense lib for ARM4
- */
-
 #include "empty.h"
 
 #define TASKSTACKSIZE   1024
