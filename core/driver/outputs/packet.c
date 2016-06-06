@@ -65,6 +65,8 @@ bool ini_uart(void){
     return false;
 }
 #endif
+
+#ifndef SOLO_QUAT
 /**
  *  @brief      Prints a variable argument log message.
  *  USB output will be formatted as follows:\n
@@ -134,6 +136,8 @@ int _MLPrintLog (int priority, const char* tag, const char* fmt, ...)
 
     return 0;
 }
+#endif
+
 
 void eMPL_send_quat(long *quat)
 {
@@ -169,6 +173,7 @@ void eMPL_send_quat(long *quat)
     UART_write(uart, out, PACKET_LENGTH);
 }
 
+#ifndef SOLO_QUAT
 void eMPL_send_data(unsigned char type, long *data)
 {
     char out[PACKET_LENGTH];
@@ -242,7 +247,7 @@ void eMPL_send_data(unsigned char type, long *data)
 //        }
     UART_write(uart, out, PACKET_LENGTH);
 }
-
+#endif
 
 void uartDebug(unsigned char *out, int len){
     UART_write(uart, out, len);

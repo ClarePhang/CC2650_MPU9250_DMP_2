@@ -177,10 +177,14 @@ extern "C" {
 
 
 #ifdef CC2650
+#define print_Debug			//print to CCS console
 #include <xdc/std.h>													//TIRTOS
 #include <xdc/runtime/System.h>
-#define MPL_LOGI System_flush(); System_printf
-//#define MPL_LOGI (void)
+#ifdef print_Debug
+#define MPL_LOGI(fmt, ...) System_printf(fmt); System_flush()
+#else
+void
+#endif
 #endif
 
 #ifndef MPL_LOGI

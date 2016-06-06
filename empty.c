@@ -1,6 +1,6 @@
 #include "empty.h"
 
-#define TASKSTACKSIZE   1024
+#define TASKSTACKSIZE   2000
 
 /* Pin driver handle */
 static PIN_Handle ledPinHandle;
@@ -50,8 +50,8 @@ static struct platform_data_s gyro_pdata = {
 #else
 static struct platform_data_s gyro_pdata = {
 		.orientation = { 1,  0,  0,
-						 0,  1,  0,
-						 0,  0,  1}
+				0,  1,  0,
+				0,  0,  1}
 };
 #endif
 
@@ -79,11 +79,7 @@ static struct platform_data_s compass_pdata = {
 #endif
 
 
-/* Private define ------------------------------------------------------------*/
-
-/* Private macro -------------------------------------------------------------*/
-/* Private variables ---------------------------------------------------------*/
-/* Private function prototypes -----------------------------------------------*/
+#ifndef SOLO_QUAT
 /* ---------------------------------------------------------------------------*/
 /* Get data from MPL.
  * TODO: Add return values to the inv_get_sensor_type_xxx APIs to differentiate
@@ -125,62 +121,64 @@ static void read_from_mpl(void)
 			eMPL_send_data(PACKET_DATA_COMPASS, data);
 	}
 #endif
-if (hal.report & PRINT_EULER) {
-	if (inv_get_sensor_type_euler(data, &accuracy,
-			(inv_time_t*)&timestamp))
-		eMPL_send_data(PACKET_DATA_EULER, data);
-}
-if (hal.report & PRINT_ROT_MAT) {
-	if (inv_get_sensor_type_rot_mat(data, &accuracy,
-			(inv_time_t*)&timestamp))
-		eMPL_send_data(PACKET_DATA_ROT, data);
-}
-if (hal.report & PRINT_HEADING) {
-	if (inv_get_sensor_type_heading(data, &accuracy,
-			(inv_time_t*)&timestamp))
-		eMPL_send_data(PACKET_DATA_HEADING, data);
-}
-if (hal.report & PRINT_LINEAR_ACCEL) {
-	if (inv_get_sensor_type_linear_acceleration(float_data, &accuracy, (inv_time_t*)&timestamp)) {
-		MPL_LOGI("Linear Accel: %7.5f %7.5f %7.5f\r\n",
-				float_data[0], float_data[1], float_data[2]);
+	if (hal.report & PRINT_EULER) {
+		if (inv_get_sensor_type_euler(data, &accuracy,
+				(inv_time_t*)&timestamp))
+			eMPL_send_data(PACKET_DATA_EULER, data);
 	}
-}
-if (hal.report & PRINT_GRAVITY_VECTOR) {
-	if (inv_get_sensor_type_gravity(float_data, &accuracy,
-			(inv_time_t*)&timestamp))
-		MPL_LOGI("Gravity Vector: %7.5f %7.5f %7.5f\r\n",
-				float_data[0], float_data[1], float_data[2]);
-}
-if (hal.report & PRINT_PEDO) {
-	unsigned long timestamp;
-	//get_tick_count(&timestamp);
-	get_ms(&timestamp);
-	if (timestamp > hal.next_pedo_ms) {
-		hal.next_pedo_ms = timestamp + PEDO_READ_MS;
-		unsigned long step_count, walk_time;
-		dmp_get_pedometer_step_count(&step_count);
-		dmp_get_pedometer_walk_time(&walk_time);
-		MPL_LOGI("Walked %ld steps over %ld milliseconds..\n", step_count,
-				walk_time);
+	if (hal.report & PRINT_ROT_MAT) {
+		if (inv_get_sensor_type_rot_mat(data, &accuracy,
+				(inv_time_t*)&timestamp))
+			eMPL_send_data(PACKET_DATA_ROT, data);
 	}
-}
+	if (hal.report & PRINT_HEADING) {
+		if (inv_get_sensor_type_heading(data, &accuracy,
+				(inv_time_t*)&timestamp))
+			eMPL_send_data(PACKET_DATA_HEADING, data);
+	}
+	if (hal.report & PRINT_LINEAR_ACCEL) {
+		if (inv_get_sensor_type_linear_acceleration(float_data, &accuracy, (inv_time_t*)&timestamp)) {
+			MPL_LOGI("Linear Accel: %7.5f %7.5f %7.5f\r\n",
+					float_data[0], float_data[1], float_data[2]);
+		}
+	}
+	if (hal.report & PRINT_GRAVITY_VECTOR) {
+		if (inv_get_sensor_type_gravity(float_data, &accuracy,
+				(inv_time_t*)&timestamp))
+			MPL_LOGI("Gravity Vector: %7.5f %7.5f %7.5f\r\n",
+					float_data[0], float_data[1], float_data[2]);
+	}
+	if (hal.report & PRINT_PEDO) {
+		unsigned long timestamp;
+		//get_tick_count(&timestamp);
+		get_ms(&timestamp);
+		if (timestamp > hal.next_pedo_ms) {
+			hal.next_pedo_ms = timestamp + PEDO_READ_MS;
+			unsigned long step_count, walk_time;
+			dmp_get_pedometer_step_count(&step_count);
+			dmp_get_pedometer_walk_time(&walk_time);
+			MPL_LOGI("Walked %ld steps over %ld milliseconds..\n", step_count,
+					walk_time);
+		}
+	}
 
-/* Whenever the MPL detects a change in motion state, the application can
- * be notified. For this example, we use an LED to represent the current
- * motion state.
- */
-msg = inv_get_message_level_0(INV_MSG_MOTION_EVENT |
-		INV_MSG_NO_MOTION_EVENT);
-if (msg) {
-	if (msg & INV_MSG_MOTION_EVENT) {
-		MPL_LOGI("Motion!\n");
-	} else if (msg & INV_MSG_NO_MOTION_EVENT) {
-		MPL_LOGI("No motion!\n");
-	}
+	/* Whenever the MPL detects a change in motion state, the application can
+	 * be notified. For this example, we use an LED to represent the current
+	 * motion state.
+	 */
+	msg = inv_get_message_level_0(INV_MSG_MOTION_EVENT |
+			INV_MSG_NO_MOTION_EVENT);
+	if (msg) {
+		if (msg & INV_MSG_MOTION_EVENT) {
+			MPL_LOGI("Motion!\n");
+		} else if (msg & INV_MSG_NO_MOTION_EVENT) {
+			MPL_LOGI("No motion!\n");
+		}
 	}
 }
+#endif
 
+#ifndef SOLO_QUAT
 #ifdef COMPASS_ENABLED
 void send_status_compass() {
 	long data[3] = { 0 };
@@ -193,7 +191,9 @@ void send_status_compass() {
 
 }
 #endif
+#endif
 
+#ifndef SOLO_QUAT
 /* Handle sensor on/off combinations. */
 static void setup_gyro(void)
 {
@@ -210,10 +210,10 @@ static void setup_gyro(void)
 		lp_accel_was_on |= hal.lp_accel_mode;
 	}
 #endif
-/* If you need a power transition, this function should be called with a
- * mask of the sensors still enabled. The driver turns off any sensors
- * excluded from this mask.
- */
+	/* If you need a power transition, this function should be called with a
+	 * mask of the sensors still enabled. The driver turns off any sensors
+	 * excluded from this mask.
+	 */
 	mpu_set_sensors(mask);
 	mpu_configure_fifo(mask);
 	if (lp_accel_was_on) {
@@ -224,7 +224,10 @@ static void setup_gyro(void)
 		inv_set_accel_sample_rate(1000000L / rate);
 	}
 }
+#endif
 
+
+#ifndef SOLO_QUAT
 static void tap_cb(unsigned char direction, unsigned char count)
 {
 	switch (direction) {
@@ -252,7 +255,9 @@ static void tap_cb(unsigned char direction, unsigned char count)
 	MPL_LOGI("x%d\n", count);
 	return;
 }
+#endif
 
+#ifndef SOLO_QUAT
 static void android_orient_cb(unsigned char orientation)
 {
 	switch (orientation) {
@@ -272,15 +277,17 @@ static void android_orient_cb(unsigned char orientation)
 		return;
 	}
 }
+#endif
 
 
+#ifndef SOLO_QUAT
 static inline void run_self_test(void)
 {
 	int result;
 	long gyro[3], accel[3];
 
 #if defined (MPU6500) || defined (MPU9250)
-	result = mpu_run_6500_self_test(gyro, accel, 0);
+	result = mpu_run_6500_self_test(gyro, accel, 1);
 #elif defined (MPU6050) || defined (MPU9150)
 	result = mpu_run_self_test(gyro, accel);
 #endif
@@ -348,7 +355,9 @@ static inline void run_self_test(void)
 	}
 
 }
+#endif
 
+#ifndef SOLO_QUAT
 static void handle_input(void)
 {
 
@@ -377,7 +386,7 @@ static void handle_input(void)
 			inv_compass_was_turned_off();
 		break;
 #endif
-/* The commands send individual sensor data or fused data to the PC. */
+		/* The commands send individual sensor data or fused data to the PC. */
 	case 'a':
 		hal.report ^= PRINT_ACCEL;
 		break;
@@ -588,6 +597,8 @@ static void handle_input(void)
 	}
 	hal.rx.cmd = 0;
 }
+#endif
+
 
 /* Every time new gyro data is available, this function is called in an
  * ISR context. In this example, it sets a flag protecting the FIFO read
@@ -604,17 +615,8 @@ static void uartCb(void){
 	PIN_setOutputValue(ledPinHandle, Board_LED0,!PIN_getOutputValue(Board_LED0));
 	new_uart=TRUE;
 }
-/*******************************************************************************/
-/////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////
 
-/*
- *  ======== heartBeatFxn ========
- *  Toggle the Board_LED0. The Task_sleep is determined by arg0 which
- *  is configured for the heartBeat Task instance.
- */
+//Main
 Void heartBeatFxn(UArg arg0, UArg arg1)
 {
 
@@ -635,7 +637,10 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 		System_abort("Error UART.\n");
 
 	printt("UART int\n"); flushh();
+
+#ifndef SOLO_QUAT
 	reg_int_UART_cb(uartCb);
+#endif
 
 	printt("MPU\n"); flushh();
 	int_param.cb=gyro_data_ready_cb;
@@ -643,6 +648,7 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 	if (result) {
 		MPL_LOGE("Could not initialize gyro.\n");
 	}
+
 
 
 	/* If you're not using an MPU9150 AND you're not using DMP features, this
@@ -658,6 +664,7 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 	printt("DMP\n"); flushh();
 	/* Compute 6-axis and 9-axis quaternions. */
 	inv_enable_quaternion();
+
 	inv_enable_9x_sensor_fusion();
 	/* The MPL expects compass data at a constant rate (matching the rate
 	 * passed to inv_set_compass_sample_rate). If this is an issue for your
@@ -688,8 +695,9 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 	 *
 	 * inv_enable_in_use_auto_calibration();
 	 */
-	printt("MAG\n"); flushh();
+
 #ifdef COMPASS_ENABLED
+	printt("MAG\n"); flushh();
 	/* Compass calibration algorithms. */
 	inv_enable_vector_compass_cal();
 	inv_enable_magnetic_disturbance();
@@ -776,7 +784,7 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 	hal.next_temp_ms = 0;
 
 	/* Compass reads are handled by scheduler. */
-//	get_tick_count(&timestamp);
+	//	get_tick_count(&timestamp);
 	get_ms(&timestamp);
 
 	/* To initialize the DMP:
@@ -812,8 +820,11 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 	dmp_load_motion_driver_firmware();
 	dmp_set_orientation(
 			inv_orientation_matrix_to_scalar(gyro_pdata.orientation));
+	#ifndef SOLO_QUAT
 	dmp_register_tap_cb(tap_cb);
 	dmp_register_android_orient_cb(android_orient_cb);
+	#endif
+
 	/*
 	 * Known Bug -
 	 * DMP when enabled will sample sensor data at 200Hz and output to FIFO at the rate
@@ -827,33 +838,39 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 	 *
 	 * DMP sensor fusion works only with gyro at +-2000dps and accel +-2G
 	 */
+	#ifndef SOLO_QUAT
 	hal.dmp_features = DMP_FEATURE_6X_LP_QUAT | DMP_FEATURE_TAP |
 			DMP_FEATURE_ANDROID_ORIENT | DMP_FEATURE_SEND_RAW_ACCEL | DMP_FEATURE_SEND_CAL_GYRO |
 			DMP_FEATURE_GYRO_CAL;
+	#else
+	hal.dmp_features = DMP_FEATURE_6X_LP_QUAT | DMP_FEATURE_TAP | DMP_FEATURE_SEND_RAW_ACCEL | DMP_FEATURE_SEND_CAL_GYRO |DMP_FEATURE_GYRO_CAL;
+	#endif
+
 	dmp_enable_feature(hal.dmp_features);
 	dmp_set_fifo_rate(DEFAULT_MPU_HZ);
 	mpu_set_dmp_state(1);
 	hal.dmp_on = 1;
 
-//	while(1){
-//		PIN_setOutputValue(ledPinHandle, Board_LED1,!PIN_getOutputValue(Board_LED1));
-//		Task_sleep(100);
-//	}
 
 	uartRead();																//Pide caracter via uart, sin bloquear
+	//run_self_test();
+
 	printt("Rutilde\n"); System_flush();
 	while(1){
-//		PIN_setOutputValue(ledPinHandle, Board_LED1,!PIN_getOutputValue(Board_LED1));
-//		Task_sleep(100);
+		//		PIN_setOutputValue(ledPinHandle, Board_LED1,!PIN_getOutputValue(Board_LED1));
+		//		Task_sleep(100);
 		unsigned long sensor_timestamp;
 		int new_data = 0;
+
+		#ifndef SOLO_QUAT
 		if(new_uart){
 			new_uart=FALSE;
 			handle_input();
 			uartRead();																//Pide caracter via uart, sin bloquear
 		}
+		#endif
 
-//		get_tick_count(&timestamp);
+		//		get_tick_count(&timestamp);
 		get_ms(&timestamp);
 
 
@@ -867,9 +884,9 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 			new_compass = 1;
 		}
 #endif
-/* Temperature data doesn't need to be read with every gyro sample.
- * Let's make them timer-based like the compass reads.
- */
+		/* Temperature data doesn't need to be read with every gyro sample.
+		 * Let's make them timer-based like the compass reads.
+		 */
 		if (timestamp > hal.next_temp_ms) {
 			hal.next_temp_ms = timestamp + TEMP_READ_MS;
 			new_temp = 1;
@@ -894,6 +911,7 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 			continue;
 		}
 
+#ifndef SOLO_QUAT
 		if (hal.new_gyro && hal.lp_accel_mode) {
 			short accel_short[3];
 			long accel[3];
@@ -904,7 +922,13 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 			inv_build_accel(accel, 0, sensor_timestamp);
 			new_data = 1;
 			hal.new_gyro = 0;
-		} else if (hal.new_gyro && hal.dmp_on) {
+		}
+
+		else if (hal.new_gyro && hal.dmp_on) {
+#else
+			if (hal.new_gyro && hal.dmp_on) {
+#endif
+
 			short gyro[3], accel_short[3], sensors;
 			unsigned char more;
 			long accel[3], quat[4], temperature;
@@ -1011,10 +1035,23 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 			 * in eMPL_outputs.c. This function only needs to be called at the
 			 * rate requested by the host.
 			 */
+			#ifndef SOLO_QUAT
 			read_from_mpl();
+			#else
+			long data[9];
+			int8_t accuracy;
+			unsigned long timestamp;
+			if (inv_get_sensor_type_quat(data, &accuracy, (inv_time_t*)&timestamp)) {
+				/* Sends a quaternion packet to the PC. Since this is used by the Python
+				 * test app to visually represent a 3D quaternion, it's sent each time
+				 * the MPL has new data.
+				 */
+				eMPL_send_quat(data);
+			}
+			#endif
 		}
 
-		flushh();
+		//		flushh();
 	}
 }
 
@@ -1030,10 +1067,11 @@ int main(void)
 	Board_initUART();
 	// Board_initWatchdog();
 
+
 	/* Construct heartBeat Task  thread */
 	Task_Params_init(&taskParams);
 	taskParams.arg0 = 1000;
-
+	taskParams.priority=7;
 	taskParams.stackSize = TASKSTACKSIZE;
 	taskParams.stack = &task0Stack;
 	taskParams.instance->name = "heartBeat";

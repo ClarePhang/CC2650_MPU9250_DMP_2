@@ -2518,7 +2518,10 @@ static int get_st_6500_biases(long *gyro, long *accel, unsigned char hw_test, in
 		if (i2c_read(st.hw->addr, st.reg->fifo_count_h, 2, data))
 			return -1;
 		fifo_count = (data[0] << 8) | data[1];
+
 		packet_count = fifo_count / MAX_PACKET_LENGTH;
+
+		 if(debug) log_i("Fifo count = %u Packet count= %u\n",fifo_count,packet_count);
 		if ((test.packet_thresh - s) < packet_count)
 		            packet_count = test.packet_thresh - s;
 		read_size = packet_count * MAX_PACKET_LENGTH;
@@ -2542,6 +2545,7 @@ static int get_st_6500_biases(long *gyro, long *accel, unsigned char hw_test, in
 			gyro[1] += (long)gyro_cur[1];
 			gyro[2] += (long)gyro_cur[2];
 			ind += MAX_PACKET_LENGTH;
+			if(debug) log_i("acc= %ld %ld %ld gr= %ld %ld %ld\n",accel[0],accel[1],accel[2],gyro[0],gyro[1],gyro[2]);
 		}
 		s += packet_count;
     }
