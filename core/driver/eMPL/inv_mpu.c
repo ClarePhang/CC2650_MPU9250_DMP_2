@@ -2043,6 +2043,7 @@ static int gyro_self_test(long *bias_regular, long *bias_st)
 }
 
 #endif 
+
 #ifdef AK89xx_SECONDARY
 static int compass_self_test(void)
 {
@@ -2053,29 +2054,39 @@ static int compass_self_test(void)
 
     mpu_set_bypass(1);
 
-    tmp[0] = AKM_POWER_DOWN;
-    if (i2c_write(st.chip_cfg.compass_addr, AKM_REG_CNTL, 1, tmp))
-        return 0x07;
-    tmp[0] = AKM_BIT_SELF_TEST;
-    if (i2c_write(st.chip_cfg.compass_addr, AKM_REG_ASTC, 1, tmp))
-        goto AKM_restore;
-    tmp[0] = AKM_MODE_SELF_TEST;
-    if (i2c_write(st.chip_cfg.compass_addr, AKM_REG_CNTL, 1, tmp))
-        goto AKM_restore;
 
+    tmp[0] = AKM_POWER_DOWN;
+    if (i2c_write(st.chip_cfg.compass_addr, AKM_REG_CNTL, 1, tmp)){
+    	log_i("mag err 1\n");
+    	return 0x07;
+    }
+    tmp[0] = AKM_BIT_SELF_TEST;
+    if (i2c_write(st.chip_cfg.compass_addr, AKM_REG_ASTC, 1, tmp)){
+    	log_i("mag err 2\n");
+    	goto AKM_restore;
+    }
+    tmp[0] = AKM_MODE_SELF_TEST;
+    if (i2c_write(st.chip_cfg.compass_addr, AKM_REG_CNTL, 1, tmp)){
+    	log_i("mag err 3\n");
+    	goto AKM_restore;
+    }
     do {
         delay_ms(10);
-        if (i2c_read(st.chip_cfg.compass_addr, AKM_REG_ST1, 1, tmp))
-            goto AKM_restore;
+        if (i2c_read(st.chip_cfg.compass_addr, AKM_REG_ST1, 1, tmp)){
+        	log_i("mag err 4\n");
+        	goto AKM_restore;
+        }
         if (tmp[0] & AKM_DATA_READY)
             break;
     } while (tries--);
-    if (!(tmp[0] & AKM_DATA_READY))
-        goto AKM_restore;
-
-    if (i2c_read(st.chip_cfg.compass_addr, AKM_REG_HXL, 6, tmp))
-        goto AKM_restore;
-
+    if (!(tmp[0] & AKM_DATA_READY)){
+    	log_i("mag err 5\n");
+    	goto AKM_restore;
+    }
+    if (i2c_read(st.chip_cfg.compass_addr, AKM_REG_HXL, 6, tmp)){
+    	log_i("mag err 6\n");
+    	goto AKM_restore;
+    }
     result = 0;
 #if defined MPU9150
     data = (short)(tmp[1] << 8) | tmp[0];
@@ -2089,14 +2100,20 @@ static int compass_self_test(void)
         result |= 0x04;
 #elif defined MPU9250
     data = (short)(tmp[1] << 8) | tmp[0];
-    if ((data > 200) || (data < -200))  
-        result |= 0x01;
+    if ((data > 200) || (data < -200)){
+    	log_i("data1 >200\n");
+    	result |= 0x01;
+    }
     data = (short)(tmp[3] << 8) | tmp[2];
-    if ((data > 200) || (data < -200))  
-        result |= 0x02;
+    if ((data > 200) || (data < -200)){
+    	log_i("data 2 >200\n");
+    	result |= 0x02;
+    }
     data = (short)(tmp[5] << 8) | tmp[4];
-    if ((data > -800) || (data < -3200))  
-        result |= 0x04;
+    if ((data > -800) || (data < -3200)){
+    	log_i("data 3 >-800\n");
+    	result |= 0x04;
+    }
 #endif
 AKM_restore:
     tmp[0] = 0 | SUPPORTS_AK89xx_HIGH_SENS;
@@ -2104,6 +2121,7 @@ AKM_restore:
     tmp[0] = SUPPORTS_AK89xx_HIGH_SENS;
     i2c_write(st.chip_cfg.compass_addr, AKM_REG_CNTL, 1, tmp);
     mpu_set_bypass(0);
+    log_i("result= %u\n", result);
     return result;
 }
 #endif
@@ -2662,9 +2680,6 @@ int mpu_run_6500_self_test(long *gyro, long *accel, unsigned char debug)
     	log_i("Accel Self Test Results: %d\n", accel_result);
 
     gyro_result = gyro_6500_self_test(gyro, gyro_st, debug);
-    if(debug)
-    	log_i("Gyro Self Test Results: %d\n", gyro_result);
-
     result = 0;
     if (!gyro_result)
         result |= 0x01;
@@ -2673,16 +2688,21 @@ int mpu_run_6500_self_test(long *gyro, long *accel, unsigned char debug)
 
 #ifdef AK89xx_SECONDARY
     compass_result = compass_self_test();
-    if(debug)
-    	log_i("Compass Self Test Results: %d\n", compass_result);
     if (!compass_result)
         result |= 0x04;
 #else
     result |= 0x04;
 #endif
+    if(debug)
+        	log_i("Accel Self Test Results: %d\n", accel_result);
+    if(debug)
+    	log_i("Gyro Self Test Results: %d\n", gyro_result);
+    if(debug)
+       	log_i("Compass Self Test Results: %d\n", compass_result);
+
 restore:
 	if(debug)
-		log_i("Exiting HWST\n");
+		log_i("Exiting HWST. Result = %u\n",result);
 	/* Set to invalid values to ensure no I2C writes are skipped. */
 	st.chip_cfg.gyro_fsr = 0xFF;
 	st.chip_cfg.accel_fsr = 0xFF;

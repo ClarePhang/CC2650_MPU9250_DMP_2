@@ -12,7 +12,7 @@
 
 #include "empty.h"
 
-#define TASKSTACKSIZE   1024
+#define TASKSTACKSIZE   2000
 
 /* Pin driver handle */
 static PIN_Handle ledPinHandle;
@@ -292,7 +292,7 @@ static inline void run_self_test(void)
 	long gyro[3], accel[3];
 
 #if defined (MPU6500) || defined (MPU9250)
-	result = mpu_run_6500_self_test(gyro, accel, 0);
+	result = mpu_run_6500_self_test(gyro, accel, 1);
 #elif defined (MPU6050) || defined (MPU9150)
 	result = mpu_run_self_test(gyro, accel);
 #endif
@@ -656,6 +656,7 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 		MPL_LOGE("Could not initialize gyro.\n");
 	}
 
+	run_self_test();
 
 	/* If you're not using an MPU9150 AND you're not using DMP features, this
 	 * function will place all slaves on the primary bus.
