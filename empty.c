@@ -656,7 +656,7 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 		MPL_LOGE("Could not initialize gyro.\n");
 	}
 
-	run_self_test();
+//	run_self_test();
 
 	/* If you're not using an MPU9150 AND you're not using DMP features, this
 	 * function will place all slaves on the primary bus.
