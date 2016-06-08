@@ -747,6 +747,7 @@ int mpu_init(struct int_param_s *int_param)
 	//log_i("\tSel Interfaz i2c=1\n");
 	if(!i2c_sel_interface(1,st.hw->addr))						//Select MPU i2c interface
 		return -1;
+	Task_sleep(100);
 #endif
 
     /* Reset device. */
