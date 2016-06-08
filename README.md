@@ -13,28 +13,20 @@ At this moment the code requieres 110K of Flash = 84% and 12.7k of Sram = 62%.
 
 I understand that invensense has created all functions that the user could need, we can remove all of those that we don't need. For example I'll work only with quaternions, so I can put aside the Tap orientation, pedometer...
 
-Problems:
-Until now I'm running the code with the dev-pack 1.2 CC-DEVPACK-DEBUG, it print's the code log's to the CCS console, for sure this is making my code seems slower. The uart is the one created by the dev-pack.
-
-I haven't tested directly with the battery, the reason is that my batt ran out and also, I'll have to wire a usb port to serial to the CC2650 uart pins. I reduced the uart speed to 9600, another speed bricks the execution, maybe the pack only supports this baud rate.
-
-Somer uart calls, make the code to throw exceptions, for example calling the auto test.
-
 You can find my code here in github. I'll appreciate any contribution or fix that you can 
 write here or push to my repository.
 
 https://github.com/EinSoldiatGott/CC2650_MPU9250_DMP_2
 https://github.com/EinSoldiatGott/eMPL-python-CC2650
 
-Once I upload the video I'll start a new repository fork that only throws the quaternions.
-
 Recomendations:
-To be honest, until now I haven't liked the dmp performance, it took me a lot of work to have it working and it gets stuck, has drifting, angle offset...
+To be honest, until now I haven't liked the dmp performance.
 
 Also I don't like the lack of information and support from invensense, they don't explain what and why are we writting to the registers, I wrote them here without answer. Here  and by email.
 
-At this moment I don't know if the angle offset is coming from the DMP (where I cannot do anything) or if it's a overflow in the MPL lib calculations, or wrong calculated offset...
-
 I hope you can find my lib useful and maybe bring some contribution.
+
+https://www.youtube.com/watch?v=xbpfuHIj8J4
+https://www.youtube.com/watch?v=zdHmyTGSAjI
 
 My best regards
