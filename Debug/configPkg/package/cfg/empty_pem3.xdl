@@ -9,7 +9,7 @@
  */
 
 
--l"C:\Users\EinSoldiatGott\Documents\GitHub\CC2650_MPU9250_DMP_2\Debug\configPkg\package\cfg\empty_pem3.oem3"
+-l"C:\Users\Ein\Documents\GitHub\CC2650_MPU9250_DMP_2\Debug\configPkg\package\cfg\empty_pem3.oem3"
 -l"C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/tidrivers_cc13xx_cc26xx_2_16_01_13/packages/ti/mw/display/lib/display.aem3"
 -l"C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/tidrivers_cc13xx_cc26xx_2_16_01_13/packages/ti/mw/lcd/lib/lcd.aem3"
 -l"C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/tidrivers_cc13xx_cc26xx_2_16_01_13/packages/ti/mw/grlib/lib/grlib.aem3"
@@ -17,7 +17,7 @@
 -l"C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/tidrivers_cc13xx_cc26xx_2_16_01_13/packages/ti/drivers/lib/power_cc26xx_tirtos.aem3"
 -l"C:\ti\tirtos_cc13xx_cc26xx_2_16_01_14\products\tidrivers_cc13xx_cc26xx_2_16_01_13\packages\ti\mw\fatfs\lib\release\ti.mw.fatfs.aem3"
 -l"C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/tidrivers_cc13xx_cc26xx_2_16_01_13/packages/ti/drivers/ports/lib/tirtosport.aem3"
--l"C:\Users\EinSoldiatGott\Documents\GitHub\CC2650_MPU9250_DMP_2\src\sysbios\sysbios.aem3"
+-l"C:\Users\Ein\Documents\GitHub\CC2650_MPU9250_DMP_2\src\sysbios\sysbios.aem3"
 -l"C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/tidrivers_cc13xx_cc26xx_2_16_01_13/packages/ti/drivers/pdm/lib/pdm_cc26xxware.aem3"
 -l"C:\ti\tirtos_cc13xx_cc26xx_2_16_01_14\products\bios_6_45_02_31\packages\ti\targets\arm\rtsarm\lib\ti.targets.arm.rtsarm.aem3"
 -l"C:\ti\tirtos_cc13xx_cc26xx_2_16_01_14\products\bios_6_45_02_31\packages\ti\targets\arm\rtsarm\lib\boot.aem3"

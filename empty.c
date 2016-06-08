@@ -620,12 +620,16 @@ static void uartCb(void){
 Void heartBeatFxn(UArg arg0, UArg arg1)
 {
 
-	printt("HeartBeat :)\n"); flushh();
+	printt("Task:)\n"); flushh();
+	Task_sleep(100);
 	inv_error_t result;
 	unsigned char accel_fsr,  new_temp = 0;
 	unsigned short gyro_rate, gyro_fsr;
 	unsigned long timestamp;
 	struct int_param_s int_param;
+
+
+
 
 #ifdef COMPASS_ENABLED
 	unsigned char new_compass = 0;
