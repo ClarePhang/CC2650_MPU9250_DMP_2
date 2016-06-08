@@ -54,7 +54,16 @@ bool i2c_write(uint8_t slave_addr, uint8_t reg_addr, uint8_t length, uint8_t *da
 		*p++ = *data++;
 	}
 	length++;
-	return !i2c_escribe(buffer,length);
+
+	I2C_Transaction masterTransaction;
+
+	  masterTransaction.writeCount   = length;
+	  masterTransaction.writeBuf     = buffer;
+	  masterTransaction.readCount    = 0;
+	  masterTransaction.readBuf      = NULL;
+	  masterTransaction.slaveAddress = slaveAddr;
+	  return !I2C_transfer(i2cHandle, &masterTransaction) == TRUE;
+
 }
 
 

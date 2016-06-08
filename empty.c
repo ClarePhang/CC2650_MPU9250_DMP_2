@@ -632,18 +632,23 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 	unsigned short compass_fsr;
 #endif
 
-	printt("UART\n"); flushh();
-	if(ini_uart())						//Inicia UART
-		System_abort("Error UART.\n");
 
-	printt("UART int\n"); flushh();
+	printt("UART\n"); flushh();
+	if(ini_uart()){						//Inicia UART
+		System_abort("Error UART.\n");
+	}
+
+
+
 
 #ifndef SOLO_QUAT
+	printt("UART int\n"); flushh();
 	reg_int_UART_cb(uartCb);
 #endif
 
 	printt("MPU\n"); flushh();
 	int_param.cb=gyro_data_ready_cb;
+
 	result = mpu_init(&int_param);
 	if (result) {
 		MPL_LOGE("Could not initialize gyro.\n");
@@ -720,6 +725,9 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 	if (result) {
 		MPL_LOGE("Could not start the MPL.\n");
 	}
+
+
+
 
 	/* Get/set hardware configuration. Start gyro. */
 	/* Wake up all sensors. */
@@ -852,10 +860,13 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 	hal.dmp_on = 1;
 
 
+
 	uartRead();																//Pide caracter via uart, sin bloquear
 	//run_self_test();
 
 	printt("Rutilde\n"); System_flush();
+
+
 	while(1){
 		//		PIN_setOutputValue(ledPinHandle, Board_LED1,!PIN_getOutputValue(Board_LED1));
 		//		Task_sleep(100);

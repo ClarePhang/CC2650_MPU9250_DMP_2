@@ -749,11 +749,18 @@ int mpu_init(struct int_param_s *int_param)
 		return -1;
 #endif
 
+
+
     /* Reset device. */
     data[0] = BIT_RESET;
-    if (i2c_write(st.hw->addr, st.reg->pwr_mgmt_1, 1, data))
-        return -1;
+    if (i2c_write(st.hw->addr, st.reg->pwr_mgmt_1, 1, data)){
+    	int_param->cb();
+    	while(1);
+//    	return -1;
+    }
+
     delay_ms(100);
+
 
     /* Wake up chip. */
     data[0] = 0x00;
