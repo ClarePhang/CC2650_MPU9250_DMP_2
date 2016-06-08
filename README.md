@@ -20,26 +20,11 @@ I haven't tested directly with the battery, the reason is that my batt ran out a
 
 Somer uart calls, make the code to throw exceptions, for example calling the auto test.
 
-The pedometer lags when measuring the steps.
-
-The code almost always ends with this output
-
-FSR = 0x0001
-HFSR = 0x40000000
-DFSR = 0x00000001
-MMAR = 0xe000ed34
-BFAR = 0xe000ed38
-AFSR = 0x00000000
-
-In a moment I'll upload a video, to show the angle offset.
-
 You can find my code here in github. I'll appreciate any contribution or fix that you can 
 write here or push to my repository.
 
 https://github.com/EinSoldiatGott/CC2650_MPU9250_DMP_2
 https://github.com/EinSoldiatGott/eMPL-python-CC2650
-
-If you test directly with the battery please let me know how it works.
 
 Once I upload the video I'll start a new repository fork that only throws the quaternions.
 
