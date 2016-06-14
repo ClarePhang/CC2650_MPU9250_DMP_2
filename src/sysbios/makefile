@@ -16,11 +16,11 @@ BIOS_INC  = -I"C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/bios_6_45_02_31/pa
 
 TARGET_INC = -I"C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/bios_6_45_02_31/packages/"
 
-INCS = $(BIOS_INC) $(TARGET_INC)  --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include" --include_path="C:/Users/Ein/Documents/GitHub/CC2650_MPU9250_DMP_2" --include_path="C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/cc26xxware_2_23_02_16941" 
+INCS = $(BIOS_INC) $(TARGET_INC)  --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include" --include_path="C:/Users/EinSoldiatGott/Documents/GitHub/CC2650_MPU9250_DMP_2" --include_path="C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/cc26xxware_2_23_02_16941" 
 
-CC = C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/bin/armcl -c $(CCOPTS) -I C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include
-ASM = C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/bin/armcl -c $(CCOPTS) -I C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include
-AR = C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/bin/armar rq
+CC = C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/bin/armcl -c $(CCOPTS) -I C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include
+ASM = C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/bin/armcl -c $(CCOPTS) -I C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include
+AR = C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/bin/armar rq
 
 DEL = C:/ti/xdctools_3_32_00_06_core/packages/../bin/rm -f
 CP = C:/ti/xdctools_3_32_00_06_core/packages/../bin/cp -f

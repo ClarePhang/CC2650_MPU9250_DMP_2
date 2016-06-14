@@ -1,18 +1,18 @@
 # FIXED
 
 core/mllite/start_manager.obj: ../core/mllite/start_manager.c
-core/mllite/start_manager.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/string.h
-core/mllite/start_manager.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/linkage.h
-core/mllite/start_manager.obj: C:/Users/Ein/Documents/GitHub/CC2650_MPU9250_DMP_2/core/driver/include/log.h
-core/mllite/start_manager.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stdlib.h
-core/mllite/start_manager.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stdarg.h
+core/mllite/start_manager.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/string.h
+core/mllite/start_manager.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/linkage.h
+core/mllite/start_manager.obj: C:/Users/EinSoldiatGott/Documents/GitHub/CC2650_MPU9250_DMP_2/core/driver/include/log.h
+core/mllite/start_manager.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/stdlib.h
+core/mllite/start_manager.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/stdarg.h
 core/mllite/start_manager.obj: C:/ti/xdctools_3_32_00_06_core/packages/xdc/std.h
-core/mllite/start_manager.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stdarg.h
-core/mllite/start_manager.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stddef.h
+core/mllite/start_manager.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/stdarg.h
+core/mllite/start_manager.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/stddef.h
 core/mllite/start_manager.obj: C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/bios_6_45_02_31/packages/ti/targets/arm/elf/std.h
 core/mllite/start_manager.obj: C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/bios_6_45_02_31/packages/ti/targets/arm/elf/M3.h
 core/mllite/start_manager.obj: C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/bios_6_45_02_31/packages/ti/targets/std.h
-core/mllite/start_manager.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stdint.h
+core/mllite/start_manager.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/stdint.h
 core/mllite/start_manager.obj: C:/ti/xdctools_3_32_00_06_core/packages/xdc/runtime/System.h
 core/mllite/start_manager.obj: C:/ti/xdctools_3_32_00_06_core/packages/xdc/runtime/xdc.h
 core/mllite/start_manager.obj: C:/ti/xdctools_3_32_00_06_core/packages/xdc/runtime/Types.h
@@ -86,26 +86,26 @@ core/mllite/start_manager.obj: C:/ti/xdctools_3_32_00_06_core/packages/xdc/runti
 core/mllite/start_manager.obj: ../core/mllite/start_manager.h
 core/mllite/start_manager.obj: ../core/mllite/../../core/driver/include/mltypes.h
 core/mllite/start_manager.obj: ../core/mllite/../../core/driver/include/stdint_invensense.h
-core/mllite/start_manager.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/string.h
-core/mllite/start_manager.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/errno.h
-core/mllite/start_manager.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/yvals.h
-core/mllite/start_manager.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stdarg.h
-core/mllite/start_manager.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/_lock.h
-core/mllite/start_manager.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/limits.h
+core/mllite/start_manager.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/string.h
+core/mllite/start_manager.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/errno.h
+core/mllite/start_manager.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/yvals.h
+core/mllite/start_manager.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/stdarg.h
+core/mllite/start_manager.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/_lock.h
+core/mllite/start_manager.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/limits.h
 
 ../core/mllite/start_manager.c: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/string.h: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/linkage.h: 
-C:/Users/Ein/Documents/GitHub/CC2650_MPU9250_DMP_2/core/driver/include/log.h: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stdlib.h: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stdarg.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/string.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/linkage.h: 
+C:/Users/EinSoldiatGott/Documents/GitHub/CC2650_MPU9250_DMP_2/core/driver/include/log.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/stdlib.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/stdarg.h: 
 C:/ti/xdctools_3_32_00_06_core/packages/xdc/std.h: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stdarg.h: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stddef.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/stdarg.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/stddef.h: 
 C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/bios_6_45_02_31/packages/ti/targets/arm/elf/std.h: 
 C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/bios_6_45_02_31/packages/ti/targets/arm/elf/M3.h: 
 C:/ti/tirtos_cc13xx_cc26xx_2_16_01_14/products/bios_6_45_02_31/packages/ti/targets/std.h: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stdint.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/stdint.h: 
 C:/ti/xdctools_3_32_00_06_core/packages/xdc/runtime/System.h: 
 C:/ti/xdctools_3_32_00_06_core/packages/xdc/runtime/xdc.h: 
 C:/ti/xdctools_3_32_00_06_core/packages/xdc/runtime/Types.h: 
@@ -179,9 +179,9 @@ C:/ti/xdctools_3_32_00_06_core/packages/xdc/runtime/package/System_Module_GatePr
 ../core/mllite/start_manager.h: 
 ../core/mllite/../../core/driver/include/mltypes.h: 
 ../core/mllite/../../core/driver/include/stdint_invensense.h: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/string.h: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/errno.h: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/yvals.h: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/stdarg.h: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/_lock.h: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.7/include/limits.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/string.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/errno.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/yvals.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/stdarg.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/_lock.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/limits.h: 

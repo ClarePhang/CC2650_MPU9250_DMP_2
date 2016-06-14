@@ -610,11 +610,13 @@ void gyro_data_ready_cb(void)
 	PIN_setOutputValue(ledPinHandle, Board_LED1,!PIN_getOutputValue(Board_LED1));
 }
 
+#ifndef SOLO_QUAT
 /* UART  */
 static void uartCb(void){
 	PIN_setOutputValue(ledPinHandle, Board_LED0,!PIN_getOutputValue(Board_LED0));
 	new_uart=TRUE;
 }
+#endif
 
 //Main
 Void heartBeatFxn(UArg arg0, UArg arg1)
@@ -960,8 +962,10 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 			 * leftover packets in the FIFO.
 			 */
 			dmp_read_fifo(gyro, accel_short, quat, &sensor_timestamp, &sensors, &more);
+			eMPL_send_quat(quat);
 			if (!more)
 				hal.new_gyro = 0;
+#ifndef SOLO_QUAT
 			if (sensors & INV_XYZ_GYRO) {
 				/* Push the new data to the MPL. */
 				inv_build_gyro(gyro, sensor_timestamp);
@@ -984,6 +988,7 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 				inv_build_quat(quat, 0, sensor_timestamp);
 				new_data = 1;
 			}
+#endif
 		} else if (hal.new_gyro) {
 			short gyro[3], accel_short[3];
 			unsigned char sensors, more;
@@ -1002,6 +1007,7 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 					&sensors, &more);
 			if (more)
 				hal.new_gyro = 1;
+
 			if (sensors & INV_XYZ_GYRO) {
 				/* Push the new data to the MPL. */
 				inv_build_gyro(gyro, sensor_timestamp);
@@ -1061,7 +1067,7 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 				 * test app to visually represent a 3D quaternion, it's sent each time
 				 * the MPL has new data.
 				 */
-				eMPL_send_quat(data);
+//				eMPL_send_quat(data);
 			}
 			#endif
 		}
