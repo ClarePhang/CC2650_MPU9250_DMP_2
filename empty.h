@@ -5,6 +5,52 @@
  *      Author: Ein
  */
 
+/* To initialize the DMP:
+	 * 1. Call dmp_load_motion_driver_firmware(). This pushes the DMP image in
+	 *    inv_mpu_dmp_motion_driver.h into the MPU memory.
+	 * 2. Push the gyro and accel orientation matrix to the DMP.
+	 * 3. Register gesture callbacks. Don't worry, these callbacks won't be
+	 *    executed unless the corresponding feature is enabled.
+	 * 4. Call dmp_enable_feature(mask) to enable different features.
+	 * 5. Call dmp_set_fifo_rate(freq) to select a DMP output rate.
+	 * 6. Call any feature-specific control functions.
+	 *
+	 * To enable the DMP, just call mpu_set_dmp_state(1). This function can
+	 * be called repeatedly to enable and disable the DMP at runtime.
+	 *
+	 * The following is a short summary of the features supported in the DMP
+	 * image provided in inv_mpu_dmp_motion_driver.c:
+	 * DMP_FEATURE_LP_QUAT: Generate a gyro-only quaternion on the DMP at
+	 * 200Hz. Integrating the gyro data at higher rates reduces numerical
+	 * errors (compared to integration on the MCU at a lower sampling rate).
+	 * DMP_FEATURE_6X_LP_QUAT: Generate a gyro/accel quaternion on the DMP at
+	 * 200Hz. Cannot be used in combination with DMP_FEATURE_LP_QUAT.
+	 * DMP_FEATURE_TAP: Detect taps along the X, Y, and Z axes.
+	 * DMP_FEATURE_ANDROID_ORIENT: Google's screen rotation algorithm. Triggers
+	 * an event at the four orientations where the screen should rotate.
+	 * DMP_FEATURE_GYRO_CAL: Calibrates the gyro data after eight seconds of
+	 * no motion.
+	 * DMP_FEATURE_SEND_RAW_ACCEL: Add raw accelerometer data to the FIFO.
+	 * DMP_FEATURE_SEND_RAW_GYRO: Add raw gyro data to the FIFO.
+	 * DMP_FEATURE_SEND_CAL_GYRO: Add calibrated gyro data to the FIFO. Cannot
+	 * be used in combination with DMP_FEATURE_SEND_RAW_GYRO.
+	 */
+
+
+	/*
+	 * Known Bug -
+	 * DMP when enabled will sample sensor data at 200Hz and output to FIFO at the rate
+	 * specified in the dmp_set_fifo_rate API. The DMP will then sent an interrupt once
+	 * a sample has been put into the FIFO. Therefore if the dmp_set_fifo_rate is at 25Hz
+	 * there will be a 25Hz interrupt from the MPU device.
+	 *
+	 * There is a known issue in which if you do not enable DMP_FEATURE_TAP
+	 * then the interrupts will be at 200Hz even if fifo rate
+	 * is set at a different rate. To avoid this issue include the DMP_FEATURE_TAP
+	 *
+	 * DMP sensor fusion works only with gyro at +-2000dps and accel +-2G
+	 */
+
 #ifndef EMPTY_H_
 #define EMPTY_H_
 
@@ -88,14 +134,13 @@ struct hal_s {
 	unsigned long next_temp_ms;
 	unsigned long next_compass_ms;
 	struct rx_s rx;
-#endif
-
-
-	unsigned char sensors;
 	unsigned char dmp_on;
-	volatile unsigned char new_gyro;
 	unsigned long no_dmp_hz;
 	unsigned int report;
+	unsigned char sensors;
+#endif
+
+	volatile unsigned char new_gyro;
 	unsigned short dmp_features;
 
 };

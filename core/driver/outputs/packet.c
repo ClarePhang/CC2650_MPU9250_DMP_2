@@ -166,10 +166,6 @@ void eMPL_send_quat(long *quat)
     out[21] = '\r';
     out[22] = '\n';
     
-    //TODO: Reemplazar con mi uart
-//        for (i=0; i<PACKET_LENGTH; i++) {
-//          fputc(out[i]);
-//        }
     UART_write(uart, out, PACKET_LENGTH);
 }
 
