@@ -11,7 +11,7 @@ var makeAssembly = false;
 var Executable = xdc.module('xdc.bld.Executable');
 
 var exeOpts = new Executable.Attrs({
-        cfgScript: 'C:/Users/Ein/Documents/GitHub/CC2650_MPU9250_DMP_2/empty.cfg',
+        cfgScript: 'C:/Users/EinSoldiatGott/Documents/GitHub/CC2650_MPU9250_DMP_2/empty.cfg',
         profile: 'release',
         cfgHome: 'xconfig_empty',
 });
@@ -40,8 +40,8 @@ else {
 }
 
 var thisObj = {
-    cfg:        'C:/Users/Ein/Documents/GitHub/CC2650_MPU9250_DMP_2/empty.cfg',
-    outputPath: 'C:/Users/Ein/Documents/GitHub/CC2650_MPU9250_DMP_2/.config/xconfig_empty',
+    cfg:        'C:/Users/EinSoldiatGott/Documents/GitHub/CC2650_MPU9250_DMP_2/empty.cfg',
+    outputPath: 'C:/Users/EinSoldiatGott/Documents/GitHub/CC2650_MPU9250_DMP_2/.config/xconfig_empty',
     exeName:    'empty' + suffix,
     exeIntName: 'empty' + suffix.replace('.', '_'),
     targ:       targ,

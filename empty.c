@@ -1,6 +1,6 @@
 #include "empty.h"
 
-#define TASKSTACKSIZE   2000
+#define TASKSTACKSIZE   700
 
 /* Pin driver handle */
 static PIN_Handle ledPinHandle;
@@ -48,11 +48,13 @@ static struct platform_data_s gyro_pdata = {
 				0, 0, 1}
 };
 #else
+#ifndef SOLO_QUAT
 static struct platform_data_s gyro_pdata = {
 		.orientation = { 1,  0,  0,
 				0,  1,  0,
 				0,  0,  1}
 };
+#endif
 #endif
 
 #if defined MPU9150 || defined MPU9250
@@ -622,11 +624,15 @@ static void uartCb(void){
 Void heartBeatFxn(UArg arg0, UArg arg1)
 {
 
-	printt("Task:)\n"); flushh();
+//	printt("Task:)\n"); flushh();
 	Task_sleep(100);
+
 	inv_error_t result;
+
+	#ifndef SOLO_QUAT
 	unsigned char accel_fsr,  new_temp = 0;
 	unsigned short gyro_rate, gyro_fsr;
+	#endif
 	unsigned long timestamp;
 	struct int_param_s int_param;
 
@@ -639,7 +645,7 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 #endif
 
 
-	printt("UART\n"); flushh();
+//	printt("UART\n"); flushh();
 	if(ini_uart()){						//Inicia UART
 		System_abort("Error UART.\n");
 	}
@@ -652,7 +658,7 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 	reg_int_UART_cb(uartCb);
 #endif
 
-	printt("MPU\n"); flushh();
+//	printt("MPU\n"); flushh();
 	int_param.cb=gyro_data_ready_cb;
 
 	result = mpu_init(&int_param);
@@ -661,6 +667,7 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 	}
 
 
+#ifndef SOLO_QUAT
 
 	/* If you're not using an MPU9150 AND you're not using DMP features, this
 	 * function will place all slaves on the primary bus.
@@ -672,7 +679,7 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 		MPL_LOGE("Could not initialize MPL.\n");
 	}
 
-	printt("DMP\n"); flushh();
+//	printt("DMP\n"); flushh();
 	/* Compute 6-axis and 9-axis quaternions. */
 	inv_enable_quaternion();
 
@@ -733,6 +740,7 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 	}
 
 
+#endif
 
 
 	/* Get/set hardware configuration. Start gyro. */
@@ -740,28 +748,34 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 #ifdef COMPASS_ENABLED
 	mpu_set_sensors(INV_XYZ_GYRO | INV_XYZ_ACCEL | INV_XYZ_COMPASS);
 #else
-	mpu_set_sensors(INV_XYZ_GYRO | INV_XYZ_ACCEL);
+	//mpu_set_sensors(INV_XYZ_GYRO | INV_XYZ_ACCEL);		//Done in the init
 #endif
 	/* Push both gyro and accel data into the FIFO. */
-	mpu_configure_fifo(INV_XYZ_GYRO | INV_XYZ_ACCEL);
-	mpu_set_sample_rate(DEFAULT_MPU_HZ);
+//	mpu_configure_fifo(INV_XYZ_GYRO | INV_XYZ_ACCEL);		//Done in the init
+//	mpu_set_sample_rate(DEFAULT_MPU_HZ);					//Done in the init
 #ifdef COMPASS_ENABLED
 	/* The compass sampling rate can be less than the gyro/accel sampling rate.
 	 * Use this function for proper power management.
 	 */
 	mpu_set_compass_sample_rate(1000 / COMPASS_READ_MS);
 #endif
+#ifndef SOLO_QUAT
 	/* Read back configuration in case it was set improperly. */
 	mpu_get_sample_rate(&gyro_rate);
 	mpu_get_gyro_fsr(&gyro_fsr);
 	mpu_get_accel_fsr(&accel_fsr);
+#endif
 #ifdef COMPASS_ENABLED
 	mpu_get_compass_fsr(&compass_fsr);
 #endif
+
+#ifndef SOLO_QUAT
 	/* Sync driver configuration with MPL. */
 	/* Sample rate expected in microseconds. */
 	inv_set_gyro_sample_rate(1000000L / gyro_rate);
 	inv_set_accel_sample_rate(1000000L / gyro_rate);
+#endif
+
 #ifdef COMPASS_ENABLED
 	/* The compass rate is independent of the gyro and accel rates. As long as
 	 * inv_set_compass_sample_rate is called with the correct value, the 9-axis
@@ -769,6 +783,7 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 	 */
 	inv_set_compass_sample_rate(COMPASS_READ_MS * 1000L);
 #endif
+#ifndef SOLO_QUAT
 	/* Set chip-to-body orientation matrix.
 	 * Set hardware units to dps/g's/degrees scaling factor.
 	 */
@@ -783,7 +798,8 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 			inv_orientation_matrix_to_scalar(compass_pdata.orientation),
 			(long)compass_fsr<<15);
 #endif
-	printt("HAL\n"); flushh();
+#endif
+//	printt("HAL\n"); flushh();
 	/* Initialize HAL state variables. */
 #ifdef COMPASS_ENABLED
 	hal.sensors = ACCEL_ON | GYRO_ON | COMPASS_ON;
@@ -792,14 +808,19 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 #endif
 	hal.dmp_on = 0;
 	hal.report = 0;
+
+#ifndef SOLO_QUAT
 	hal.rx.cmd = 0;
 	hal.next_pedo_ms = 0;
 	hal.next_compass_ms = 0;
 	hal.next_temp_ms = 0;
+#endif
 
+#ifndef SOLO_QUAT
 	/* Compass reads are handled by scheduler. */
 	//	get_tick_count(&timestamp);
 	get_ms(&timestamp);
+#endif
 
 	/* To initialize the DMP:
 	 * 1. Call dmp_load_motion_driver_firmware(). This pushes the DMP image in
@@ -832,8 +853,7 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 	 * be used in combination with DMP_FEATURE_SEND_RAW_GYRO.
 	 */
 	dmp_load_motion_driver_firmware();
-	dmp_set_orientation(
-			inv_orientation_matrix_to_scalar(gyro_pdata.orientation));
+	//dmp_set_orientation(inv_orientation_matrix_to_scalar(gyro_pdata.orientation));
 	#ifndef SOLO_QUAT
 	dmp_register_tap_cb(tap_cb);
 	dmp_register_android_orient_cb(android_orient_cb);
@@ -857,6 +877,7 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 			DMP_FEATURE_ANDROID_ORIENT | DMP_FEATURE_SEND_RAW_ACCEL | DMP_FEATURE_SEND_CAL_GYRO |
 			DMP_FEATURE_GYRO_CAL;
 	#else
+	//hal.dmp_features = DMP_FEATURE_6X_LP_QUAT | DMP_FEATURE_TAP | DMP_FEATURE_SEND_RAW_ACCEL | DMP_FEATURE_SEND_CAL_GYRO |DMP_FEATURE_GYRO_CAL;
 	hal.dmp_features = DMP_FEATURE_6X_LP_QUAT | DMP_FEATURE_TAP | DMP_FEATURE_SEND_RAW_ACCEL | DMP_FEATURE_SEND_CAL_GYRO |DMP_FEATURE_GYRO_CAL;
 	#endif
 
@@ -867,17 +888,22 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 
 
 
+#ifndef SOLO_QUAT
 	uartRead();																//Pide caracter via uart, sin bloquear
-	//run_self_test();
+#endif
 
-	printt("Rutilde\n"); System_flush();
+
+//	printt("Rutilde\n"); System_flush();
 
 
 	while(1){
 		//		PIN_setOutputValue(ledPinHandle, Board_LED1,!PIN_getOutputValue(Board_LED1));
 		//		Task_sleep(100);
+
+#ifndef SOLO_QUAT
 		unsigned long sensor_timestamp;
 		int new_data = 0;
+#endif
 
 		#ifndef SOLO_QUAT
 		if(new_uart){
@@ -887,8 +913,11 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 		}
 		#endif
 
+
+#ifndef SOLO_QUAT
 		//		get_tick_count(&timestamp);
 		get_ms(&timestamp);
+#endif
 
 
 #ifdef COMPASS_ENABLED
@@ -901,6 +930,7 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 			new_compass = 1;
 		}
 #endif
+#ifndef SOLO_QUAT
 		/* Temperature data doesn't need to be read with every gyro sample.
 		 * Let's make them timer-based like the compass reads.
 		 */
@@ -908,7 +938,9 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 			hal.next_temp_ms = timestamp + TEMP_READ_MS;
 			new_temp = 1;
 		}
+#endif
 
+#ifndef SOLO_QUAT
 		if (hal.motion_int_mode) {
 			/* Enable motion interrupt. */
 			mpu_lp_motion_interrupt(500, 1, 5);
@@ -923,6 +955,7 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 			mpu_lp_motion_interrupt(0, 0, 0);
 			hal.motion_int_mode = 0;
 		}
+#endif
 
 		if (!hal.sensors || !hal.new_gyro) {
 			continue;
@@ -946,9 +979,12 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 			if (hal.new_gyro && hal.dmp_on) {
 #endif
 
+#ifndef SOLO_QUAT
 			short gyro[3], accel_short[3], sensors;
+			long accel[3], temperature;
+#endif
 			unsigned char more;
-			long accel[3], quat[4], temperature;
+			long quat[4];
 			/* This function gets new data from the FIFO when the DMP is in
 			 * use. The FIFO can contain any combination of gyro, accel,
 			 * quaternion, and gesture data. The sensors parameter tells the
@@ -961,7 +997,7 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 			 * registered). The more parameter is non-zero if there are
 			 * leftover packets in the FIFO.
 			 */
-			dmp_read_fifo(gyro, accel_short, quat, &sensor_timestamp, &sensors, &more);
+			dmp_read_fifo_quat(quat, &more);
 			eMPL_send_quat(quat);
 			if (!more)
 				hal.new_gyro = 0;
@@ -989,7 +1025,9 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 				new_data = 1;
 			}
 #endif
-		} else if (hal.new_gyro) {
+		}
+#ifndef SOLO_QUAT
+			else if (hal.new_gyro) {
 			short gyro[3], accel_short[3];
 			unsigned char sensors, more;
 			long accel[3], temperature;
@@ -1027,6 +1065,7 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 				new_data = 1;
 			}
 		}
+#endif
 #ifdef COMPASS_ENABLED
 		if (new_compass) {
 			short compass_short[3];
@@ -1049,6 +1088,7 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 			new_data = 1;
 		}
 #endif
+#ifndef SOLO_QUAT
 		if (new_data) {
 			inv_execute_on_data();
 			/* This function reads bias-compensated sensor data and sensor
@@ -1071,7 +1111,7 @@ Void heartBeatFxn(UArg arg0, UArg arg1)
 			}
 			#endif
 		}
-
+#endif
 		//		flushh();
 	}
 }
@@ -1098,8 +1138,8 @@ int main(void)
 	taskParams.instance->name = "heartBeat";
 	Task_construct(&task0Struct, (Task_FuncPtr)heartBeatFxn, &taskParams, NULL);
 
-	printt("\nIniciando:\n");
-	printt("Pines...\n");
+//	printt("\nIniciando:\n");
+//	printt("Pines...\n");
 
 	ledPinHandle = PIN_open(&ledPinState, ledPinTable);
 	if(!ledPinHandle) {
@@ -1107,13 +1147,13 @@ int main(void)
 	}
 
 
-	printt("I2C...\n");
+//	printt("I2C...\n");
 	if(!i2c_inicia()){
 		System_abort("Error de i2c\n");
 	}
 
-	printt("BIOS...\n");
-	System_flush();
+//	printt("BIOS...\n");
+//	System_flush();
 
 	BIOS_start();
 	return (0);

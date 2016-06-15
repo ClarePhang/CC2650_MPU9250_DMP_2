@@ -30,11 +30,13 @@
 #include "empty.h"
 #include "core/driver/eMPL/inv_mpu.h"
 #include "core/driver/eMPL/inv_mpu_dmp_motion_driver.h"
+#ifndef SOLO_QUAT
 #include "core/mllite/invensense.h"
 #include "core/mpl/invensense_adv.h"
 #include "core/eMPL-hal/eMPL_outputs.h"
 #include "core/driver/include/mltypes.h"
 #include "core/driver/include/mpu.h"
+#endif
 #include "core/driver/include/log.h"
 #include <core/driver/outputs/packet.h>
 #include "delays.h"
@@ -78,19 +80,24 @@ struct rx_s {
 	unsigned char cmd;
 };
 struct hal_s {
+#ifndef SOLO_QUAT
 	unsigned char lp_accel_mode;
-	unsigned char sensors;
-	unsigned char dmp_on;
 	unsigned char wait_for_tap;
-	volatile unsigned char new_gyro;
 	unsigned char motion_int_mode;
-	unsigned long no_dmp_hz;
 	unsigned long next_pedo_ms;
 	unsigned long next_temp_ms;
 	unsigned long next_compass_ms;
+	struct rx_s rx;
+#endif
+
+
+	unsigned char sensors;
+	unsigned char dmp_on;
+	volatile unsigned char new_gyro;
+	unsigned long no_dmp_hz;
 	unsigned int report;
 	unsigned short dmp_features;
-	struct rx_s rx;
+
 };
 
 

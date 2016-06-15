@@ -810,9 +810,12 @@ int mpu_init(struct int_param_s *int_param)
         return -1;
     if (mpu_set_lpf(42))
         return -1;
-    if (mpu_set_sample_rate(50))
+//    if (mpu_set_sample_rate(50))
+    if (mpu_set_sample_rate(20))		//This is done later in the main, so why do it twice
         return -1;
-    if (mpu_configure_fifo(0))
+
+    if (mpu_configure_fifo(INV_XYZ_GYRO | INV_XYZ_ACCEL)) //This is done later in the main, so why do it twice
+    //    if (mpu_configure_fifo(0))
         return -1;
 
 #ifndef EMPL_TARGET_STM32F4
@@ -835,7 +838,8 @@ int mpu_init(struct int_param_s *int_param)
         return -1;
 #endif
 
-    mpu_set_sensors(0);
+//    mpu_set_sensors(0);
+        mpu_set_sensors(INV_XYZ_GYRO | INV_XYZ_ACCEL); //This is done later in the main, so why do it twice
     return 0;
 }
 

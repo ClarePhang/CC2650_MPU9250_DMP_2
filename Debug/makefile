@@ -4,7 +4,7 @@
 
 SHELL = cmd.exe
 
-CG_TOOL_ROOT := C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5
+CG_TOOL_ROOT := C:/ti/ccsv6/tools/compiler/ti-cgt-arm_16.3.0.STS
 
 GEN_OPTS__FLAG := --cmd_file="configPkg/compiler.opt"
 GEN_CMDS__FLAG := -l"configPkg/linker.cmd"
@@ -166,13 +166,13 @@ all: CC2650_MPU9250_DMP_2.out
 CC2650_MPU9250_DMP_2.out: $(OBJS) $(CMD_SRCS) $(A_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Linker'
-	"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/bin/armcl" -mv7M3 --code_state=16 --float_support=vfplib --abi=eabi -me -O4 --opt_for_speed=0 --fp_mode=relaxed -g --define=ccs --define=SOLO_QUAT --define=CC2650 --define=USE_DMP --define=EMPL --define=EMPL_TARGET_STM32F4 --define=MPU6500 --diag_wrap=off --diag_warning=225 --diag_warning=255 --display_error_number --gen_func_subsections=on -z -m"CC2650_MPU9250_DMP_2.map" --heap_size=0 --stack_size=256 -i"C:/Users/EinSoldiatGott/Documents/GitHub/CC2650_MPU9250_DMP_2/core/driver/eMPL" -i"C:/Users/EinSoldiatGott/Documents/GitHub/CC2650_MPU9250_DMP_2/core/mpl" -i"C:/Users/EinSoldiatGott/Documents/GitHub/CC2650_MPU9250_DMP_2/core/eMPL-hal" -i"C:/Users/EinSoldiatGott/Documents/GitHub/CC2650_MPU9250_DMP_2/core/mllite" -i"C:/Users/EinSoldiatGott/Documents/GitHub/CC2650_MPU9250_DMP_2/core/driver/include" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include" --reread_libs --display_error_number --diag_wrap=off --warn_sections --xml_link_info="CC2650_MPU9250_DMP_2_linkInfo.xml" --rom_model -o "CC2650_MPU9250_DMP_2.out" $(ORDERED_OBJS) $(A_SRCS)
+	"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_16.3.0.STS/bin/armcl" -mv7M3 --code_state=16 --float_support=vfplib -me -O4 --opt_for_speed=0 --fp_mode=relaxed -g --define=ccs --define=SOLO_QUAT --define=CC2650 --define=USE_DMP --define=EMPL --define=EMPL_TARGET_STM32F4 --define=MPU6500 --display_error_number --diag_wrap=off --diag_warning=225 --diag_warning=255 --gen_func_subsections=on --abi=eabi -z -m"CC2650_MPU9250_DMP_2.map" --heap_size=0 --stack_size=256 -i"C:/Users/EinSoldiatGott/Documents/GitHub/CC2650_MPU9250_DMP_2/core/driver/eMPL" -i"C:/Users/EinSoldiatGott/Documents/GitHub/CC2650_MPU9250_DMP_2/core/mpl" -i"C:/Users/EinSoldiatGott/Documents/GitHub/CC2650_MPU9250_DMP_2/core/eMPL-hal" -i"C:/Users/EinSoldiatGott/Documents/GitHub/CC2650_MPU9250_DMP_2/core/mllite" -i"C:/Users/EinSoldiatGott/Documents/GitHub/CC2650_MPU9250_DMP_2/core/driver/include" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_16.3.0.STS/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_16.3.0.STS/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="CC2650_MPU9250_DMP_2_linkInfo.xml" --rom_model -o "CC2650_MPU9250_DMP_2.out" $(ORDERED_OBJS) $(A_SRCS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 CC2650_MPU9250_DMP_2.hex: $(EXE_OUTPUTS)
 	@echo 'Invoking: ARM Hex Utility'
-	"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/bin/armhex" --memwidth=8 --romwidth=8 --intel -o "CC2650_MPU9250_DMP_2.hex" $(EXE_OUTPUTS__QUOTED)
+	"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_16.3.0.STS/bin/armhex" --memwidth=8 --romwidth=8 --intel -o "CC2650_MPU9250_DMP_2.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building: $@'
 	@echo ' '
 
